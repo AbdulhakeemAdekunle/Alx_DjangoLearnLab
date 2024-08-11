@@ -1,5 +1,5 @@
 ### Retrieve records in Book Table 
 from bookshelf.models import Book
-Book.objects.all()
+Book.objects.get(title="1984")
 
-```<QuerySet [<Book: Book object (1)>, <Book: Book object (2)>]>```
+```<Book: Book object (1)>```
