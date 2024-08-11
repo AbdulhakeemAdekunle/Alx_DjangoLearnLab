@@ -1,5 +1,10 @@
-### Retrieve records in Book Table 
-from bookshelf.models import Book
-Book.objects.get(title="1984")
+**Retrieve a Book record instance**  
 
-```<Book: Book object (1)>```
+```Book.objects.get(title="1984")```
+> Output: Book: Book object (1)>
+
+**OR**
+
+```book.title```
+> Output: '1984'
+
