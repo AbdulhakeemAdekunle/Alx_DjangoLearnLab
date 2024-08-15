@@ -21,7 +21,8 @@ Book.objects.get(author__name="Blessing Malik")
 
 
 # List all books in a library.
-Book.objects.all()
+#Book.objects.all()
+Library.objects.get(name="library_name", books.all())
 
 
 # Retrieve the librarian for a library.
