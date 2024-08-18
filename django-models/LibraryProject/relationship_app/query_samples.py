@@ -17,14 +17,12 @@ library = Library.objects.create(name="Fred Swaniker Library Complex")
 librarian = Librarian.objects.create(name="Nungari Nguru", library=library)
 
 #Query all books by a specific author.
-Book.objects.get(author__name="author_name")
+Book.objects.filter(author__name="author_name")
 
 
 # List all books in a library.
-#Book.objects.all()
-#Book.objects.get(library__name="library_name")
-#Library.objects.get(name=library_name)
-["Library.objects.get(name=library_name)"]
+library = Library.objects.get(name="library_name")
+books_in_library = library.books.all()
 
 # Retrieve the librarian for a library.
 Librarian.objects.get(library__name = "library_name")
