@@ -7,7 +7,7 @@ from relationship_app.models import Book, Author, Library, Librarian
 
 def books_list(request):
     books = Book.objects.all()
-    return render(request, 'book_list.html', {'books': books})
+    return render(request, 'relationship/book_list.html', {'books': books})
 
 class LibraryView(DetailView):
     model = Library
