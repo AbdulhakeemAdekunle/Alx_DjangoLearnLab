@@ -5,7 +5,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.urls import reverse_lazy
 from .models import Library, Book, UserProfile
 
@@ -45,50 +45,26 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-def is_admin(user):
-    profile = UserProfile.objects.get(user=user)
-    return profile.role == 'Admin'
+def check_admin_role(user):
+    return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Admin'
 
-def is_librarian(user):
-    profile = UserProfile.objects.get(user=user)
-    return profile.role == 'Librarian'
+def check_librarian_role(user):
+    return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Librarian'
 
-def is_member(user):
-    profile = UserProfile.objects.get(user=user)
-    return profile.role == 'Member'
+def check_member_role(user):
+    return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Member'
 
-@user_passes_test(is_admin)
-def admin_view(request, user):
-    profile = UserProfile.objects.get(user=user)
-    if profile.role == 'Admin':
-        return HttpResponse('Admin Page')
-    return redirect('login')
+@login_required
+@user_passes_test(check_admin_role)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
 
-@user_passes_test(is_librarian)
+@login_required
+@user_passes_test(check_librarian_role)
 def librarian_view(request):
-    return HttpResponse('Librarian Page')
+    return render(request, 'relationship_app/librarian_view.html')
 
-@user_passes_test(is_member)
-def member_view(reqeust):
-    return HttpResponse('Member Page')
-
-# # Helper function to check the role
-# def check_role(role):
-#     def decorator(user):
-#         return user.userprofile.role == role
-#     return decorator
-
-# # Admin view
-# @user_passes_test(check_role('Admin'))
-# def admin_view(request):
-#     return render(request, 'relationship_app/admin_view.html')
-
-# # Librarian view
-# @user_passes_test(check_role('Librarian'))
-# def librarian_view(request):
-#     return render(request, 'relationship_app/librarian_view.html')
-
-# # Member view
-# @user_passes_test(check_role('Member'))
-# def member_view(request):
-#     return render(request, 'relationship_app/member_view.html')
+@login_required
+@user_passes_test(check_member_role)
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
