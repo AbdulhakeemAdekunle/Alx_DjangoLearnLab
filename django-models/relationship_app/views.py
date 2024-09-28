@@ -58,8 +58,11 @@ def is_member(user):
     return profile.role == 'Member'
 
 @user_passes_test(is_admin)
-def admin_view(request):
-    return HttpResponse('Admin Page')
+def admin_view(request, user):
+    profile = UserProfile.objects.get(user=user)
+    if profile.role == 'Admin':
+        return HttpResponse('Admin Page')
+    return redirect('login')
 
 @user_passes_test(is_librarian)
 def librarian_view(request):
