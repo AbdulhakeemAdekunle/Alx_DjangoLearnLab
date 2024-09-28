@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView as Login, LogoutView as Logout
 from django.views.generic.detail import DetailView
-from django.contrib.auth import login, logout
+from django.views.generic.edit import CreateView
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse_lazy
@@ -20,8 +21,19 @@ class LibraryDetailView(DetailView):
     context_object_name = "library"
 
 
-class LoginView(LoginView):
+class LoginView(Login):
     template_name = 'relationship_app/login.html'
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('books-list')
+
+class LogoutView(Logout):
+    template_name = 'relationship_app/logout.html'
+    success_url = reverse_lazy('login')
+
+class Register(CreateView):
+    form_class = UserCreationForm
+    template_name = 'relationship_app/register.html'
+    success_url = reverse_lazy('login')
 
 def register(request):
     if request.method == 'POST':
