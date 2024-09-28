@@ -7,7 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse_lazy
-from .models import Library, Book
+from .models import Library, Book, UserProfile
 
 # Create your views here.
 
@@ -44,6 +44,30 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
+
+def is_admin(user):
+    profile = UserProfile.objects.get(user=user)
+    return profile.role == 'Admin'
+
+def is_librarian(user):
+    profile = UserProfile.objects.get(user=user)
+    return profile.role == 'Librarian'
+
+def is_member(user):
+    profile = UserProfile.objects.get(user=user)
+    return profile.role == 'Member'
+
+@user_passes_test(is_admin)
+def admin_view(request):
+    return HttpResponse('Admin Page')
+
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return HttpResponse('Librarian Page')
+
+@user_passes_test(is_member)
+def member_view(reqeust):
+    return HttpResponse('Member Page')
 
 # # Helper function to check the role
 # def check_role(role):
