@@ -3,11 +3,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import LoginView as Login, LogoutView as Logout
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
+from django.views.generic import TemplateView
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import permission_required, user_passes_test, login_required
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
+from django.utils.decorators import method_decorator
 from .models import Library, Book, UserProfile
 from .forms import BookForm
 
@@ -93,3 +95,7 @@ def Librarian_view(request):
 @user_passes_test(member)
 def Member_view(request):
     return HttpResponse('Member Page')
+
+@method_decorator(user_passes_test(admin), name='dispatch')
+class Admin(TemplateView):
+    template_name = 'index.html'
