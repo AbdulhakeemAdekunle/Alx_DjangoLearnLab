@@ -81,15 +81,15 @@ def member(user):
 
 @login_required
 @user_passes_test(admin)
-def admin_view(request):
+def Admin_view(request):
     return HttpResponse('Admin page')
 
 @login_required
 @user_passes_test(librarian)
-def librarian_view(request):
+def Librarian_view(request):
     return HttpResponse('Librarian Page')
 
 @login_required
 @user_passes_test(member)
-def member_view(request):
+def Member_view(request):
     return HttpResponse('Member Page')
