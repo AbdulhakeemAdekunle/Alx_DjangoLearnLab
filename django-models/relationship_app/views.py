@@ -55,20 +55,10 @@ class LibraryDetailView(DetailView):
     template_name = "relationship_app/library_detail.html"
     context_object_name = "library"
 
-
 class LoginView(Login):
     template_name = 'relationship_app/login.html'
     redirect_authenticated_user = True
     success_url = reverse_lazy('books-list')
-
-class LogoutView(Logout):
-    template_name = 'relationship_app/logout.html'
-    success_url = reverse_lazy('login')
-
-class Register(CreateView):
-    form_class = UserCreationForm
-    template_name = 'relationship_app/register.html'
-    success_url = reverse_lazy('login')
 
 def register(request):
     if request.method == 'POST':
@@ -80,26 +70,26 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-def check_admin_role(user):
+def admin(user):
     return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Admin'
 
-def check_librarian_role(user):
+def librarian(user):
     return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Librarian'
 
-def check_member_role(user):
+def member(user):
     return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Member'
 
 @login_required
-@user_passes_test(check_admin_role)
+@user_passes_test(admin)
 def admin_view(request):
-    return render(request, 'relationship_app/admin_view.html')
+    return HttpResponse('Admin page')
 
 @login_required
-@user_passes_test(check_librarian_role)
+@user_passes_test(librarian)
 def librarian_view(request):
-    return render(request, 'relationship_app/librarian_view.html')
+    return HttpResponse('Librarian Page')
 
 @login_required
-@user_passes_test(check_member_role)
+@user_passes_test(member)
 def member_view(request):
-    return render(request, 'relationship_app/member_view.html')
+    return HttpResponse('Member Page')
