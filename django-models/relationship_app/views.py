@@ -83,17 +83,17 @@ def member(user):
 
 @login_required
 @user_passes_test(admin)
-def Admin_view(request):
+def Admin(request):
     return HttpResponse('Admin page')
 
 @login_required
 @user_passes_test(librarian)
-def Librarian_view(request):
+def Librarian(request):
     return HttpResponse('Librarian Page')
 
 @login_required
 @user_passes_test(member)
-def Member_view(request):
+def Member(request):
     return HttpResponse('Member Page')
 
 @method_decorator(user_passes_test(admin), name='dispatch')
