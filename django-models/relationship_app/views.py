@@ -72,27 +72,27 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-def admin(user):
+def Admin(user):
     return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Admin'
 
-def librarian(user):
+def Librarian(user):
     return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Librarian'
 
-def member(user):
+def Member(user):
     return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Member'
 
 @login_required
-@user_passes_test(admin)
+@user_passes_test(Admin)
 def Admin(request):
     return HttpResponse('Admin page')
 
 @login_required
-@user_passes_test(librarian)
+@user_passes_test(Librarian)
 def Librarian(request):
     return HttpResponse('Librarian Page')
 
 @login_required
-@user_passes_test(member)
+@user_passes_test(Member)
 def Member(request):
     return HttpResponse('Member Page')
 
