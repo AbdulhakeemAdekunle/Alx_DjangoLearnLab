@@ -82,17 +82,17 @@ def member(user):
     return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Member'
 
 @login_required
-@user_passes_test(Admin)
+@user_passes_test(admin)
 def Admin(request):
     return HttpResponse('Admin page')
 
 @login_required
-@user_passes_test(Librarian)
+@user_passes_test(librarian)
 def Librarian(request):
     return HttpResponse('Librarian Page')
 
 @login_required
-@user_passes_test(Member)
+@user_passes_test(member)
 def Member(request):
     return HttpResponse('Member Page')
 
