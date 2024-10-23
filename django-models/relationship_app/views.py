@@ -72,13 +72,13 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-def Admin(user):
+def admin(user):
     return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Admin'
 
-def Librarian(user):
+def librarian(user):
     return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Librarian'
 
-def Member(user):
+def member(user):
     return user.is_authenticated and UserProfile.objects.get(user=user).role == 'Member'
 
 @login_required
