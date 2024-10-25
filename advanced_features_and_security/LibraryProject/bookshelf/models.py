@@ -35,15 +35,14 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
-class Customer(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    address = models.TextField()
+class Book(models.Model):
+    title = models.CharField(max_length=255)
 
     class Meta:
         permissions = [
-            ('can_view', 'Can view a customer'),
-            ('can_create', 'Can create a customer'),
-            ('can_edit', 'Can edit a customer'),
-            ('can_delete', 'Can delete a customer')
+            ('can_view', 'Can view a book'),
+            ('can_create', 'Can create a book'),
+            ('can_edit', 'Can edit a book'),
+            ('can_delete', 'Can delete a book')
         ]
 
