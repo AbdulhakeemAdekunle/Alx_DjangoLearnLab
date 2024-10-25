@@ -3,8 +3,8 @@ from .models import CustomUser
 
 # Register your models here.
 
-from django.contrib import admin
+class CustomUserAdmin(admin.ModelAdmin):
+    fields = ['first_name', 'last_name', 'email', 'is_superuser']
 
-# Register your models here.
 
-admin.site.register(CustomUser)
+admin.site.register(CustomUser, CustomUserAdmin)
