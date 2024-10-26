@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.decorators import permission_required
-from .forms import BookForm
+from .forms import ExampleForm
 
 # Create your views here.
 
@@ -25,11 +25,11 @@ def get_book(request):
     # If this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request
-        form = BookForm(request.POST)
+        form = ExampleForm(request.POST)
         if form.is_valid():
             # process the data in form
             return HttpResponse('created successfully')
         else:
             # if a GET (or any other method) we'll create a blank form
-            form = BookForm()
+            form = ExampleForm()
         return render(request, 'form_example.html', {'form': form})
