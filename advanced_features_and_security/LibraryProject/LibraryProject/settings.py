@@ -79,6 +79,9 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 # site should only be accessed via HTTPS, allowing preloading in HSTS lists
 SECURE_HSTS_PRELOAD = True
 
+# set a custom HTTP header
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 ROOT_URLCONF = 'LibraryProject.urls'
 
 TEMPLATES = [
