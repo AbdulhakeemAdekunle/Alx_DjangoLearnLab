@@ -51,15 +51,33 @@ MIDDLEWARE = [
     'csp.middleware.CSPMiddleware',
 ]
 
+# cookie will only be sent over an HTTPS connection
 CSRF_COOKIE_SECURE = True
 
+# cookie will be marked as 'secure': browsers may ensure that the cookie is 
+# only sent over an HTTPS connection
 SESSION_COOKIE_SECURE = True
 
+# prevent browser from guessing the content type
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
+# prevent the site from being embedded in any frame/iframe on any site
 X_FRAME_OPTIONS = 'DENY'
 
+# enable browser's XSS filter
 SECURE_BROWSER_XSS_FILTER = True
+
+# redirects all non-HTTPS requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# duration (in seconds) for which a site should be accessed only via HTTPS 
+SECURE_HSTS_SECONDS = 3153600
+
+# ensure that all sub-domains can be accessed over a secure connection
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# site should only be accessed via HTTPS, allowing preloading in HSTS lists
+SECURE_HSTS_PRELOAD = True
 
 ROOT_URLCONF = 'LibraryProject.urls'
 
