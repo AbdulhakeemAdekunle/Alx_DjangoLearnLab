@@ -71,7 +71,7 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_SSL_REDIRECT = True
 
 # duration (in seconds) for which a site should be accessed only via HTTPS 
-SECURE_HSTS_SECONDS = 3153600
+SECURE_HSTS_SECONDS = 31536000
 
 # ensure that all sub-domains can be accessed over a secure connection
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
