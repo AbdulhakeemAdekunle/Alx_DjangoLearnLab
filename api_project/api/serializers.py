@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Book
+from .models import Book
 
 # BookSerializer class that gets render on api endpoint for GET request: api/books
 class BookSerializer(serializers.ModelSerializer):
